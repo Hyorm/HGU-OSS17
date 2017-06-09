@@ -11,7 +11,7 @@
 
 int n_students = 0 ;
 int n_teams = 0 ;
-int *students ;	// DONE: allow an arbitrary number of students can come from the input.
+int *students ;
 int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
@@ -23,8 +23,8 @@ int read_student_list(char* fileName)
 	int i ; 
 	int studentId;
 
-	fp = fopen(fileName, "r") ; //done(TODO: allow a user can give a different file name as an argument.)
-	if( fp == NULL){ //(add code)fix bug Print errors when a non-existent file name is input 
+	fp = fopen(fileName, "r") ; 
+	if( fp == NULL){
 		printf("Not vaild file name \n"); 
 		exit(1);  
 	}
@@ -46,12 +46,11 @@ int read_student_list(char* fileName)
 	for (i = 0 ; i < n_students ; i++) 
 		conflict[i][i] = 0 ;
 			
-	// DONE(TODO: check if a given student ID is valid.)
 	for(i = 0 ; i <n_students ; i++)
 		if(!(19600000<students[i] && students[i]<21800000)){
 			fprintf(stderr,"Invalid student ID was detected. \n");
 			exit(1);
-			}//Cause an error ,if student id is not in the range.
+		}
 }
 
 int get_student_index(int id) 
@@ -71,8 +70,8 @@ void read_conflict(char * fname)
 	size_t n = 0 ;
 	extern int errno;
 
-	fp = fopen(fname, "r") ;  // TODO: handle file errors, //fixing
-	if(fp == NULL)//Handling file errors using strerror
+	fp = fopen(fname, "r") ; 
+	if(fp == NULL)
 	{
 		fprintf(stderr,"File Read Error:%s\n",strerror(errno));
 		exit(1) ;
@@ -87,7 +86,7 @@ void read_conflict(char * fname)
 		b = NULL;
 
 		if (n_members <= 1) {
-			fprintf(stderr, "Input Error: The file has a case where the team is composed alone!\n") ; //Done(TODO: need a better error message.)
+			fprintf(stderr, "Input Error: The file has a case where the team is composed alone!\n") ; 
 			exit(1) ;
 		}
 
@@ -115,7 +114,8 @@ void read_conflict(char * fname)
 int _assign_team(int id) {
 	int is_team_feasible[MAX_STUDENTS / 2] ;
 	int n_feasible_teams = 0 ;
-	int n_max_members;//When the number of students is even 3-membered team cannot be made(done)
+	int n_max_members;
+
 	int i = 0 ; 
 	int r = 0 ;
 	int c = 0 ;
@@ -143,7 +143,8 @@ int _assign_team(int id) {
 	}
 
 	while (n_feasible_teams > 0) {
-		srand(time(NULL) + rand()); // Fiexd the same list being created every time by using -f students.txt
+		srand(time(NULL) + rand()); 
+
 		r = rand() % n_feasible_teams ; 		
 		for (i = 0 ; i < n_teams ; i++) {
 			if (is_team_feasible[i] == 1) {
@@ -211,7 +212,6 @@ void main(int argc, char ** argv)
 				printf("-p <filename>	Filename that contains the team list from the last lab session\n");
 				printf("-f <filename>	Filename that contains every student id in class\n");
 				printf("-h	Display these usage instructions\n");
-				// Please someone make a help message here. // Complete
 				break ;
 			
 			case 'f':
@@ -220,7 +220,6 @@ void main(int argc, char ** argv)
 
 			default:
 				fprintf(stderr, "Invalid argument the argument: flag should be one of p, f, h ; f should be followed by 'file name'\n") ; 
-				// Please someone make a better error message. // done
 				exit(1) ;
 		}
 	}
